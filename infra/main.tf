@@ -11,14 +11,14 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
-output "bucket_name" {
-  value = aws_s3_bucket.this.bucket
-}
-
 resource "aws_s3_object" "hello" {
   bucket = aws_s3_bucket.this.bucket
-  key    = "uploads/hello.txt"          # path inside the bucket
+  key    = "uploads/hello.txt"
   source = "${path.module}/files/hello.txt"
 
-  etag = filemd5("${path.module}/files/hello.txt") # forces updates when file changes
+  etag = filemd5("${path.module}/files/hello.txt")
+}
+
+output "bucket_name" {
+  value = aws_s3_bucket.this.bucket
 }
